@@ -22,7 +22,7 @@ func (f *FileList) GetList() []string {
 	return f.files
 }
 
-func (f *FileList) Enrich(lock *FileMove) []FileInfo {
+func (f *FileList) Enrich(lock *FileOperation) []FileInfo {
 	enrd := []FileInfo{}
 	for _, i := range f.files {
 		fullPath := f.prefixPath(i)
