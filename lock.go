@@ -7,15 +7,15 @@ import (
 	"log"
 )
 
-type FileMove struct {
+type FileOperation struct {
 	locks map[string]uint64
 }
 
-func CreateNewLock() *FileMove {
-	return &FileMove{make(map[string]uint64)}
+func CreateFileLock() *FileOperation {
+	return &FileOperation{make(map[string]uint64)}
 }
 
-func (f *FileMove) Move(from, to string) {
+func (f *FileOperation) Move(from, to string) {
 	size, err := fileSize(from)
 	if err != nil {
 		f.locks[from] = 0
@@ -27,12 +27,12 @@ func (f *FileMove) Move(from, to string) {
 	log.Println(fmt.Sprintf("Moving of %s is complete", from))
 }
 
-func (f *FileMove) IsLocked(p string) bool {
+func (f *FileOperation) IsLocked(p string) bool {
 	_, exists := f.locks[p]
 	return exists
 }
 
-func (f *FileMove) CanMove(from, to string) error {
+func (f *FileOperation) CanMove(from, to string) error {
 	log.Println(fmt.Sprintf("Requesting to move %s to %s", from, to))
 	if !isValidFolderPath(from) {
 		return errors.New("the source is not a valid file path")
@@ -60,11 +60,11 @@ func (f *FileMove) CanMove(from, to string) error {
 	return nil
 }
 
-func (f *FileMove) CanDelete(from string) bool {
+func (f *FileOperation) CanDelete(from string) bool {
 	return isValidFolderPath(from) && !f.IsLocked(from)
 }
 
-func (f *FileMove) Delete(from string) error {
+func (f *FileOperation) Delete(from string) error {
 	return deleteFile(from)
 }
 
