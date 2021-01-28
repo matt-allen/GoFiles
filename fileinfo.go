@@ -22,6 +22,14 @@ func (f *FileList) GetList() []string {
 	return f.files
 }
 
+func (f *FileList) FreeSpace() uint64 {
+	s, e := remainingSpace(f.path)
+	if e != nil {
+		return 0
+	}
+	return s
+}
+
 func (f *FileList) Enrich(lock *FileOperation) []FileInfo {
 	enrd := []FileInfo{}
 	for _, i := range f.files {
