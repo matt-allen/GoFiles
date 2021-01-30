@@ -16,5 +16,5 @@ func doesFileExist(p string) bool {
 }
 
 func isValidFolderPath(s string) bool {
-	return true
+	return doesFileExist(s)
 }
