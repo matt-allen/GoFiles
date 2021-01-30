@@ -12,6 +12,6 @@ func TestValidFileName(t *testing.T) {
 }
 
 func TestDoesFileExist(t *testing.T) {
-	assert.True(t, doesFileExist("lock.go", "."))
-	assert.False(t, doesFileExist("<.txt", "."))
+	assert.True(t, doesFileExist("lock.go"))
+	assert.False(t, doesFileExist("<.txt"))
 }

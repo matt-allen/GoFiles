@@ -10,8 +10,8 @@ func isValidFileName(s string) bool {
 	return err == nil && m
 }
 
-func doesFileExist(s, p string) bool {
-	_, err := os.Stat(s)
+func doesFileExist(p string) bool {
+	_, err := os.Stat(p)
 	return !os.IsNotExist(err)
 }
 

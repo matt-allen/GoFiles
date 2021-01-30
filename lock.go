@@ -34,6 +34,9 @@ func (f *FileOperation) IsLocked(p string) bool {
 
 func (f *FileOperation) CanMove(from, to string) error {
 	log.Println(fmt.Sprintf("Requesting to move %s to %s", from, to))
+	if !doesFileExist(from) {
+		return errors.New("the source file does not exist")
+	}
 	if !isValidFolderPath(from) {
 		return errors.New("the source is not a valid file path")
 	}
