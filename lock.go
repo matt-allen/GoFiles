@@ -37,6 +37,9 @@ func (f *FileOperation) CanMove(from, to string) error {
 	if !doesFileExist(from) {
 		return errors.New("the source file does not exist")
 	}
+	if doesFileExist(to) {
+		return errors.New("file already exists with this name at the destination")
+	}
 	if !isValidFolderPath(from) {
 		return errors.New("the source is not a valid file path")
 	}
