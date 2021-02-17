@@ -38,6 +38,8 @@ func substring(s string, i int) string {
 
 // Move a file from one location to another
 func moveFile(s, d string) error {
+	// Need to make sure the full hierarchy of the destination exists
+	_ = os.MkdirAll(d, 0755)
 	// Firstly, try renaming it. This will fail if the files are on different partitions.
 	err := os.Rename(s, d)
 	// If that fails then we need to make a copy of the file, then delete the existing one.
