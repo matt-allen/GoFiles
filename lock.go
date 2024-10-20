@@ -3,7 +3,7 @@ package fs
 import (
 	"errors"
 	"fmt"
-	"github.com/minio/minio/pkg/disk"
+	"golang.org/x/sys/unix"
 	"log"
 )
 
@@ -53,7 +53,7 @@ func (f *FileOperation) CanMove(from, to string) error {
 	if sErr != nil {
 		return sErr
 	}
-	log.Println("Checking remaining space at "+getFolderFromPath(to))
+	log.Println("Checking remaining space at " + getFolderFromPath(to))
 	left, lErr := remainingSpace(getFolderFromPath(to))
 	if lErr != nil {
 		return lErr
@@ -75,9 +75,7 @@ func (f *FileOperation) Delete(from string) error {
 }
 
 func remainingSpace(p string) (uint64, error) {
-	di, err := disk.GetInfo(p)
-	if err != nil {
-		return 0, err
-	}
-	return di.Free, err
+	var stat unix.Statfs_t
+	err := unix.Statfs(p, &stat)
+	return stat.Bavail * uint64(stat.Bsize), err
 }
