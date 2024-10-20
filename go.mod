@@ -1,4 +1,4 @@
-module fs
+module github.com/matt-allen/GoFiles
 
 go 1.22
 
